@@ -29,7 +29,7 @@ public class ArrayMaster {
                     sum += Integer.parseInt(array[i][j]);
                 }
                 catch (NumberFormatException e){
-                    throw new MyArrayDataException("Ошибка данных в ячейке" + i, j, array[i][j]);
+                    throw new MyArrayDataException(String.format("Ошибка данных в ячейке [%d][%d]:  '%s'  нельзя преобразовать в число", i, j, array[i][j]));
                 }
             }
         }

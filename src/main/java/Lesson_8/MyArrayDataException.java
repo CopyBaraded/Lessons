@@ -5,6 +5,5 @@ public class MyArrayDataException extends RuntimeException {
         super(message);
     }
 
-  public MyArrayDataException(String message, int j, String s) {
-  }
+
 }
