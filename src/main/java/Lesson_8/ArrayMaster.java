@@ -10,8 +10,10 @@ MyArrayDataException с детализацией, в какой именно я�
 неверные данные.
  */
 
+import java.util.Arrays;
+
 public class ArrayMaster {
-    public static void createArray(String[][] array) {
+    public static int checkArray(String[][] array) {
         if (array.length != 4) {
             throw new MyArraySizeException("Ошибка: массив должен быть размером 4x4");
         }
@@ -20,15 +22,17 @@ public class ArrayMaster {
                 throw new MyArraySizeException("Ошибка: Массив должен быть размером 4x4");
             }
         }
+        int sum = 0;
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
-                String value = array[i][j];
-                if (value == null || value.isEmpty()) {
-                    System.out.printf("Ячейка [%d][%d]: пустое значение\n", i, j);
-                } else {
-                    System.out.printf("Ячейка [%d][%d]: '%s' - корректное значение\n", i, j, value);
+                try {
+                    sum += Integer.parseInt(array[i][j]);
+                }
+                catch (NumberFormatException e){
+                    throw new MyArrayDataException("Ошибка данных в ячейке" + i, j, array[i][j]);
                 }
             }
         }
+        return sum;
     }
 }
