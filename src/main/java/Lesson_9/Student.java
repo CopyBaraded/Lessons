@@ -10,13 +10,14 @@ package Lesson_9;
  */
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class Student {
     private String name;
     private String group;
     private int course;
     LinkedList<Integer> grade;
-    double bal = 0;
+
 
     public Student(String name, String group, int course, LinkedList<Integer> grade){
         this.name = name;
@@ -26,11 +27,17 @@ public class Student {
     }
 
     public double averageGrade () {
-        return bal = grade.stream().mapToInt(Integer::intValue).average().orElse(0.0);
+        return grade.stream().mapToInt(Integer::intValue).average().orElse(0.0);
     }
 
     public void transferToCourse() {
-        if (bal >= 3.0)
+        if (averageGrade() >= 3.0)
             course ++;
+    }
+    public static void printStudents (List<Student> students, int course) {
+        for (Student student : students) {
+            if (student.course == course)
+                System.out.println(student.name);
+        }
     }
 }
