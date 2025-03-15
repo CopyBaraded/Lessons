@@ -19,6 +19,20 @@ public class Main {
 
         Student.printStudents(students, 2);
 
+
+        Abonents abonents = new Abonents();
+        abonents.add("Павлов", "13123-87687");
+        abonents.add("Саблин", "86123-88987");
+        abonents.add("Каровин", "76654-87687");
+        abonents.add("Воланд", "1873-87687");
+        abonents.add("Магарыч", "13123-83387");
+        abonents.add("Бездомный", "1313-875337");
+        abonents.add("Воланд", "666-999");
+
+        System.out.println("John Conar" + abonents.get("John Conar"));
+        System.out.println("Воланд" + abonents.get("Воланд"));
+        abonents.printAll();
+
     }
 
 }
