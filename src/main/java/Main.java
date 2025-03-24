@@ -73,6 +73,16 @@ public class Main {
         } catch (ArithmeticException e) {
             System.out.println(e.getMessage());
         }
+
+        TwoNumbers comparator = new TwoNumbers();
+
+        System.out.print("Введите первое число: ");
+        int num_1 = scanner.nextInt();
+
+        System.out.print("Введите второе число: ");
+        int num_2 = scanner.nextInt();
+
+        System.out.println(comparator.compare(num_1, num_2));
     }
 
 }
