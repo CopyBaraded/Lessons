@@ -1,29 +1,35 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
 
 public class MTSPage {
-    private WebDriver driver;
+    private static WebDriver driver;
 
     // Локаторы
-    private By titleLocator = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/h2");
-    private By paymentSystemsBlockLocator = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]");
-    private By visaLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[1]/img");
-    private By visaTwoLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[2]/img");
-    private By masterCardLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[3]/img");
-    private By masterCardSCLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[4]/img");
-    private By belCardLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[5]/img");
-    private By moreInfoLinkLocator = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/a");
-    private By continueButtonLocator = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[1]/div[1]/div[2]/button");
-    private By phoneInputLocator = By.xpath("//*[@id=\"connection-phone\"]");
-    private By sumInputLocator = By.xpath("//*[@id=\"connection-sum\"]");
-    private By serviceOptionLocator = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[1]/div[1]/div[2]/ul/li[1]/p");
+    private final By titleLocator = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/h2");
+    private final By paymentSystemsBlockLocator = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]");
+    private final By visaLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[1]/img");
+    private final By visaTwoLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[2]/img");
+    private final By masterCardLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[3]/img");
+    private final By masterCardSCLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[4]/img");
+    private final By belCardLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[5]/img");
+    private final By moreInfoLinkLocator = By.xpath("//a[contains(text(), 'Подробнее о сервисе')]");
+    private final By continueButtonLocator = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[1]/div[1]/div[2]/button");
+    private final By phoneInputLocator = By.xpath("//*[@id=\"connection-phone\"]");
+    private final By sumInputLocator = By.xpath("//*[@id=\"connection-sum\"]");
+    private final By serviceOptionLocator = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[1]/div[1]/div[2]/ul/li[1]/p");
 
     public MTSPage(WebDriver driver) {
-        this.driver = driver;
+        MTSPage.driver = driver;
     }
 
-    // Методы взаимодействия
     public String getTitleText() {
         return driver.findElement(titleLocator).getText();
     }
@@ -53,10 +59,28 @@ public class MTSPage {
     }
 
     public void clickMoreInfoLink() {
-        System.out.println("Попытка нажать на ссылку 'More Info'.");
-        driver.findElement(moreInfoLinkLocator).click();
-        System.out.println("Ссылка 'More Info' успешно нажата.");
+        System.out.println("Попытка нажать на ссылку 'More Info'.");//логирую каждый шаг т.к. тест падал
 
+
+
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        WebElement moreInfoLink = wait.until(ExpectedConditions.elementToBeClickable(moreInfoLinkLocator));
+//        System.out.println("Элемент 'More Info' найден и готов к клику.");
+
+        WebElement moreInfoLink = driver.findElement(moreInfoLinkLocator);
+        System.out.println("Нашли!!");
+
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("document.querySelector(\"body > a.webim-button-corner.webim_button\").style.display='none';");
+
+
+        Actions actions = new Actions(driver)
+                .moveToElement(moreInfoLink)
+                .click();
+        actions.perform();
+        System.out.println(driver.getCurrentUrl());
+        System.out.println("Ссылка 'More Info' успешно нажата.");//по другому не работал, мешает ИИ-помощница
     }
 
     public String getCurrentUrl() {

@@ -2,11 +2,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 
 public class TestMTS {
@@ -22,11 +22,13 @@ public class TestMTS {
         mtsPage = new MTSPage(driver);
 
         try {
-            WebElement cookieAcceptButton = driver.findElement(By.xpath("//*[@id=\"cookie-agree\"]"));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement cookieAcceptButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"cookie-agree\"]")));
             cookieAcceptButton.click();
-        } catch (NoSuchElementException e) {
-            System.out.println("Кнопка принятия Cookies не найдена. Возможно, она уже была принята или отсутствует.");
+        } catch (TimeoutException | NoSuchElementException e) {
+            System.out.println("Кнопка принятия Cookies не найдена или неактивна.");
         }
+
     }
 
     @Test
@@ -49,7 +51,10 @@ public class TestMTS {
     public void testMoreInfoLink() {
         mtsPage.clickMoreInfoLink();
         Assertions.assertEquals("https://www.mts.by/help/poryadok-oplaty-i-bezopasnost-internet-platezhey/", mtsPage.getCurrentUrl());
+
     }
+
+
 
     @Test
     public void testContinueButton() {
@@ -60,20 +65,20 @@ public class TestMTS {
         mtsPage.clickContinueButton();
     }
 
-//    @Test
-//    public void testFrameFieldInteraction() {
-//        mtsFramePage.switchToFrame();
-//
-//
-//        mtsFramePage.enterText("Тестовые данные");
-//        mtsFramePage.clickSubmitButton();
-//
-//
-//        // Добавить сюда свои проверки
-//
-//        // Возвращение к основному содержимому
-//        mtsFramePage.switchToDefaultContent();
-//    }
+    @Test
+    public void testFrameFieldInteraction() {
+        mtsFramePage.switchToFrame();
+
+
+        mtsFramePage.enterText("Тестовые данные");
+        mtsFramePage.clickSubmitButton();
+
+
+        // Добавить сюда свои проверки
+
+        // Возвращение к основному содержимому
+        mtsFramePage.switchToDefaultContent();
+    }
 
 
     @AfterEach
