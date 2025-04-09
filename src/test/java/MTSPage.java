@@ -3,11 +3,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
-
 
 public class MTSPage {
     private static WebDriver driver;
@@ -25,6 +20,7 @@ public class MTSPage {
     private final By phoneInputLocator = By.xpath("//*[@id=\"connection-phone\"]");
     private final By sumInputLocator = By.xpath("//*[@id=\"connection-sum\"]");
     private final By serviceOptionLocator = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[1]/div[1]/div[2]/ul/li[1]/p");
+    private final By communicationServicesLocator = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[1]/div[1]/div[2]/ul/li[1]");
 
     public MTSPage(WebDriver driver) {
         MTSPage.driver = driver;
@@ -60,21 +56,10 @@ public class MTSPage {
 
     public void clickMoreInfoLink() {
         System.out.println("Попытка нажать на ссылку 'More Info'.");//логирую каждый шаг т.к. тест падал
-
-
-
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//        WebElement moreInfoLink = wait.until(ExpectedConditions.elementToBeClickable(moreInfoLinkLocator));
-//        System.out.println("Элемент 'More Info' найден и готов к клику.");
-
         WebElement moreInfoLink = driver.findElement(moreInfoLinkLocator);
         System.out.println("Нашли!!");
-
-
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("document.querySelector(\"body > a.webim-button-corner.webim_button\").style.display='none';");
-
-
         Actions actions = new Actions(driver)
                 .moveToElement(moreInfoLink)
                 .click();
@@ -101,5 +86,10 @@ public class MTSPage {
 
     public void selectServiceOption() {
         driver.findElement(serviceOptionLocator).click();
+
+    }
+
+    public void selectComServ() {
+        driver.findElement(communicationServicesLocator).click();
     }
 }

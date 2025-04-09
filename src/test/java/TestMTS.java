@@ -20,10 +20,11 @@ public class TestMTS {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get("https://www.mts.by/");
         mtsPage = new MTSPage(driver);
+        mtsFramePage = new MTSFramePage(driver);
 
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            WebElement cookieAcceptButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"cookie-agree\"]")));
+            WebElement cookieAcceptButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("cookie-agree")));
             cookieAcceptButton.click();
         } catch (TimeoutException | NoSuchElementException e) {
             System.out.println("Кнопка принятия Cookies не найдена или неактивна.");
@@ -51,10 +52,7 @@ public class TestMTS {
     public void testMoreInfoLink() {
         mtsPage.clickMoreInfoLink();
         Assertions.assertEquals("https://www.mts.by/help/poryadok-oplaty-i-bezopasnost-internet-platezhey/", mtsPage.getCurrentUrl());
-
     }
-
-
 
     @Test
     public void testContinueButton() {
@@ -66,12 +64,23 @@ public class TestMTS {
     }
 
     @Test
+    public void testLabels() {
+
+    }
+
+    @Test
     public void testFrameFieldInteraction() {
+        mtsPage.enterPhoneNumber("297777777");
+        mtsPage.enterSum("1");
+        mtsPage.clickContinueButton();
         mtsFramePage.switchToFrame();
 
 
-        mtsFramePage.enterText("Тестовые данные");
-        mtsFramePage.clickSubmitButton();
+//        String title = mtsFramePage.getSumUp();
+//        Assertions.assertEquals("1", title);
+
+//        mtsFramePage.enterText("Тестовые данные");
+//        mtsFramePage.clickSubmitButton();
 
 
         // Добавить сюда свои проверки

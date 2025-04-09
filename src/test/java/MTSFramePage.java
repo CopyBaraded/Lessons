@@ -1,34 +1,49 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+
 
 public class MTSFramePage {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     // Локаторы
-    private By iframeLocator = By.xpath("/html/body/div[9]/div/iframe");
-    private By inputFieldLocator = By.id("field-id");
-    private By submitButtonLocator = By.id("submit-id");
+
+//    private By inputFieldLocator = By.linkText("Номер карты");
+//    private By submitButtonLocator = By.id("submit-id");
+    private By sumUpLocator = By.xpath("/html/body/app-root/div/div/div/app-payment-container/section/div/div/div[1]/div[1]/span");
 
     public MTSFramePage(WebDriver driver) {
         this.driver = driver;
     }
 
     public void switchToFrame() {
-        WebElement iframe = driver.findElement(iframeLocator);
-        driver.switchTo().frame(iframe);
+        driver.switchTo().frame(1);
+        System.out.println("Текущий URL во фрейме: " + driver.getCurrentUrl());
     }
 
     public void switchToDefaultContent() {
         driver.switchTo().defaultContent();
+        System.out.println("Вернулись к основному содержимому.");
     }
 
-    public void enterText(String text) {
-        driver.findElement(inputFieldLocator).sendKeys(text);
+    public String getSumUp() {
+        return driver.findElement(sumUpLocator).getText();
     }
 
-    public void clickSubmitButton() {
-        driver.findElement(submitButtonLocator).click();
-    }
+
+//    public By getMtsFramePage() {
+//        return mtsFramePage;
+//    }
+//
+//    public void setMtsFramePage(By mtsFramePage) {
+//        this.mtsFramePage = mtsFramePage;
+//    }
+
+//    public void enterText(String text) {
+//        driver.findElement(inputFieldLocator).sendKeys(text);
+//    }
+//
+//    public void clickSubmitButton() {
+//        driver.findElement(submitButtonLocator).click();
+//    }
 
 }
