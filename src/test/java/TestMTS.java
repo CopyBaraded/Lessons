@@ -56,39 +56,114 @@ public class TestMTS {
 
     @Test
     public void testContinueButton() {
-        mtsPage.clickContinueButton();
-        mtsPage.selectServiceOption();
         mtsPage.enterPhoneNumber("297777777");
         mtsPage.enterSum("1");
         mtsPage.clickContinueButton();
     }
 
-    @Test
-    public void testLabels() {
-
-    }
 
     @Test
-    public void testFrameFieldInteraction() {
+    public void testFrameFieldSumUp() {
         mtsPage.enterPhoneNumber("297777777");
         mtsPage.enterSum("1");
         mtsPage.clickContinueButton();
         mtsFramePage.switchToFrame();
 
+        String title = mtsFramePage.getTextSumUp();
+        System.out.println("найдена сумма" + title);
+        Assertions.assertEquals("1.00 BYN", title);
 
-//        String title = mtsFramePage.getSumUp();
-//        Assertions.assertEquals("1", title);
-
-//        mtsFramePage.enterText("Тестовые данные");
-//        mtsFramePage.clickSubmitButton();
-
-
-        // Добавить сюда свои проверки
-
-        // Возвращение к основному содержимому
         mtsFramePage.switchToDefaultContent();
     }
 
+    @Test
+    public void testFrameFieldNumPhone() {
+        mtsPage.enterPhoneNumber("297777777");
+        mtsPage.enterSum("1");
+        mtsPage.clickContinueButton();
+        mtsFramePage.switchToFrame();
+
+        String title = mtsFramePage.getPhoneNumCorrect();
+        System.out.println("найден телефон" + title);
+        Assertions.assertEquals("Оплата: Услуги связи Номер:375297777777", title);
+
+        mtsFramePage.switchToDefaultContent();
+    }
+
+    @Test
+    public void testFrameFieldNumCard() {
+        mtsPage.enterPhoneNumber("297777777");
+        mtsPage.enterSum("1");
+        mtsPage.clickContinueButton();
+        mtsFramePage.switchToFrame();
+
+//        Дежурная проверка во фрейме ли я
+//        Assertions.assertNotNull(mtsPage.getPaymentSystemsBlock(), "Блок платежных систем не найден.");
+
+        String title = mtsFramePage.getTextNumCard();
+        System.out.println("num card text" + title);
+        Assertions.assertEquals("Номер карты", title);
+
+        mtsFramePage.switchToDefaultContent();
+    }
+
+    @Test
+    public void testFrameFieldValidityPeriod() {
+        mtsPage.enterPhoneNumber("297777777");
+        mtsPage.enterSum("1");
+        mtsPage.clickContinueButton();
+        mtsFramePage.switchToFrame();
+
+        String title = mtsFramePage.getTextValidityPeriodCardField();
+        System.out.println("Validity Period Text" + title);
+        Assertions.assertEquals("Срок действия", title);
+
+        mtsFramePage.switchToDefaultContent();
+    }
+
+    @Test
+    public void testFrameFieldCardHolder() {
+        mtsPage.enterPhoneNumber("297777777");
+        mtsPage.enterSum("1");
+        mtsPage.clickContinueButton();
+        mtsFramePage.switchToFrame();
+
+        String title = mtsFramePage.getTextCardHolderField();
+        System.out.println("Card Holder" + title);
+        Assertions.assertEquals("Имя держателя (как на карте)", title);
+
+        mtsFramePage.switchToDefaultContent();
+    }
+
+    @Test
+    public void testFrameFieldCVC() {
+        mtsPage.enterPhoneNumber("297777777");
+        mtsPage.enterSum("1");
+        mtsPage.clickContinueButton();
+        mtsFramePage.switchToFrame();
+
+        String title = mtsFramePage.getTextCVCField();
+        System.out.println("CVC" + title);
+        Assertions.assertEquals("CVC", title);
+
+        mtsFramePage.switchToDefaultContent();
+    }
+
+    @Test
+    public void testFrameFieldSumDown() {
+        mtsPage.enterPhoneNumber("297777777");
+        mtsPage.enterSum("1");
+        mtsPage.clickContinueButton();
+        mtsFramePage.switchToFrame();
+        mtsFramePage.enterNumCard("1111111111111111");
+        mtsFramePage.enterValidityPeriod("03/2222");//ошибся при вводе, но для теста это не принципиально
+
+        String title = mtsFramePage.getTextSumDown();
+        System.out.println("CVC" + title);
+        Assertions.assertEquals("Оплатить 1.00 BYN", title);
+
+        mtsFramePage.switchToDefaultContent();
+    }
 
     @AfterEach
     public void tearDown() {

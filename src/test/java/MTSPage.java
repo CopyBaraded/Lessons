@@ -16,7 +16,7 @@ public class MTSPage {
     private final By masterCardSCLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[4]/img");
     private final By belCardLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[5]/img");
     private final By moreInfoLinkLocator = By.xpath("//a[contains(text(), 'Подробнее о сервисе')]");
-    private final By continueButtonLocator = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[1]/div[1]/div[2]/button");
+    private final By continueButtonLocator = By.xpath("//*[@id=\"pay-connection\"]/button");
     private final By phoneInputLocator = By.xpath("//*[@id=\"connection-phone\"]");
     private final By sumInputLocator = By.xpath("//*[@id=\"connection-sum\"]");
     private final By serviceOptionLocator = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[1]/div[1]/div[2]/ul/li[1]/p");
