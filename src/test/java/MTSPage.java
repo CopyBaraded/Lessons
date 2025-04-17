@@ -8,7 +8,8 @@ public class MTSPage {
     private static WebDriver driver;
 
     // Локаторы
-    private final By titleLocator = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/h2");
+    private final By titleLocator = By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > h2");
+
     private final By paymentSystemsBlockLocator = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]");
     private final By visaLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[1]/img");
     private final By visaTwoLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[2]/img");
