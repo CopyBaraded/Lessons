@@ -69,22 +69,4 @@ public class MTSFramePage {
     public void enterValidityPeriod(String date) {
         driver.findElement(validityPeriodInCardFieldLocator).sendKeys(date);
     }
-
-
-//    public @Nullable String getMtsFramePage() {
-//        return driver.getCurrentUrl();
-//    }
-//
-//    public void setMtsFramePage(By mtsFramePage) {
-//        this.mtsFramePage = mtsFramePage;
-//    }
-
-//    public void enterText(String text) {
-//        driver.findElement(inputFieldLocator).sendKeys(text);
-//    }
-//
-//    public void clickSubmitButton() {
-//        driver.findElement(submitButtonLocator).click();
-//    }
-
 }

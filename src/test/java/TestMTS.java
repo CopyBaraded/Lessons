@@ -1,3 +1,4 @@
+import io.qameta.allure.Issue;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -121,6 +122,7 @@ public class TestMTS {
         mtsFramePage.switchToDefaultContent();
     }
 
+    @Issue("123")
     @Test
     public void testFrameFieldCardHolder() {
         mtsPage.enterPhoneNumber("297777777");
