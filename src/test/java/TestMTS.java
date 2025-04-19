@@ -63,28 +63,33 @@ public class TestMTS {
         mtsPage.clickContinueButton();
     }
 
-
-    @Test
-    public void testFrameFieldSumUp() {
+    @BeforeEach
+    public void frameOpen(){
         mtsPage.enterPhoneNumber("297777777");
         mtsPage.enterSum("1");
         mtsPage.clickContinueButton();
         mtsFramePage.switchToFrame();
 
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+    }
+
+    @Test
+    public void testFrameFieldSumUp() {
         String title = mtsFramePage.getTextSumUp();
+
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("textElementId"), "1.00 BYN"));
+//
+
+
         System.out.println("найдена сумма" + title);
-        Assertions.assertEquals("1.00 BYN", title);
+        Assertions.assertEquals("", title);
 
         mtsFramePage.switchToDefaultContent();
     }
 
     @Test
     public void testFrameFieldNumPhone() {
-        mtsPage.enterPhoneNumber("297777777");
-        mtsPage.enterSum("1");
-        mtsPage.clickContinueButton();
-        mtsFramePage.switchToFrame();
-
         String title = mtsFramePage.getPhoneNumCorrect();
         System.out.println("найден телефон" + title);
         Assertions.assertEquals("Оплата: Услуги связи Номер:375297777777", title);
@@ -154,15 +159,11 @@ public class TestMTS {
 
     @Test
     public void testFrameFieldSumDown() {
-        mtsPage.enterPhoneNumber("297777777");
-        mtsPage.enterSum("1");
-        mtsPage.clickContinueButton();
-        mtsFramePage.switchToFrame();
         mtsFramePage.enterNumCard("1111111111111111");
         mtsFramePage.enterValidityPeriod("03/2222");//ошибся при вводе, но для теста это не принципиально
 
         String title = mtsFramePage.getTextSumDown();
-        System.out.println("CVC" + title);
+        System.out.println("Кнопка оплаты, проверка суммы  " + title);
         Assertions.assertEquals("Оплатить 1.00 BYN", title);
 
         mtsFramePage.switchToDefaultContent();

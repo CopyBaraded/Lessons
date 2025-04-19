@@ -9,13 +9,13 @@ public class MTSPage {
 
     // Локаторы
     private final By titleLocator = By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > h2");
+    private final By paymentSystemsBlockLocator = By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > div.pay__partners");
+    private final By visaLogo = By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > div.pay__partners > ul > li:nth-child(1) > img");
+    private final By visaTwoLogo = By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > div.pay__partners > ul > li:nth-child(2) > img");
+    private final By masterCardLogo = By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > div.pay__partners > ul > li:nth-child(3) > img");
+    private final By masterCardSCLogo = By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > div.pay__partners > ul > li:nth-child(4) > img");
+    private final By belCardLogo = By.cssSelector("#pay-section > div > div > div.col-12.col-xl-8 > section > div > div.pay__partners > ul > li:nth-child(5) > img");
 
-    private final By paymentSystemsBlockLocator = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]");
-    private final By visaLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[1]/img");
-    private final By visaTwoLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[2]/img");
-    private final By masterCardLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[3]/img");
-    private final By masterCardSCLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[4]/img");
-    private final By belCardLogo = By.xpath("//*[@id=\"pay-section\"]/div/div/div[2]/section/div/div[2]/ul/li[5]/img");
     private final By moreInfoLinkLocator = By.xpath("//a[contains(text(), 'Подробнее о сервисе')]");
     private final By continueButtonLocator = By.xpath("//*[@id=\"pay-connection\"]/button");
     private final By phoneInputLocator = By.xpath("//*[@id=\"connection-phone\"]");

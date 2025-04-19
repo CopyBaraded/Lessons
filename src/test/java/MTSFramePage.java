@@ -8,8 +8,9 @@ public class MTSFramePage {
 
     // Локаторы
 
-    private By sumUpLocator = By.xpath("/html/body/app-root/div/div/div/app-payment-container/section/div/div/div[1]/div[1]");
-    private By sumDownLocator = By.xpath("/html/body/app-root/div/div/div/app-payment-container/section/div/app-card-page/div/div[1]/button");
+    private By sumUpLocator = By.cssSelector("body > app-root > div > div > div > app-payment-container > section > div > div > div.pay-description__actions > div.pay-description__cost");//html/body/app-root/div/div/div/app-payment-container/section/div/div/div[1]/div[1]
+
+    private By sumDownLocator = By.cssSelector("body > app-root > div > div > div > app-payment-container > section > div > app-card-page > div > div.card-page__card > button");
     private By phoneNumCorrectLocator = By.xpath("/html/body/app-root/div/div/div/app-payment-container/section/div/div/div[2]");
     private By numCardInFieldLocator = By.xpath("//*[@id=\"cc-number\"]");
     private By validityPeriodInCardFieldLocator = By.xpath("/html/body/app-root/div/div/div/app-payment-container/section/div/app-card-page/div/div[1]/app-card-input/form/div[1]/div[2]/div[1]/app-input/div/div/div[1]/input");
