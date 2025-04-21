@@ -12,20 +12,23 @@ import java.time.Duration;
 public class TestMTS {
     private WebDriver driver;
     private MTSPage mtsPage;
-    private  MTSFramePage mtsFramePage;
+    private MTSFramePage mtsFramePage;
 
     @BeforeEach
     public void init() {
         driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.get("https://www.mts.by/");
         mtsPage = new MTSPage(driver);
         mtsFramePage = new MTSFramePage(driver);
 
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            WebElement cookieAcceptButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("cookie-agree")));
-            cookieAcceptButton.click();
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            WebElement loaddElmnt = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("cookie-agree")));
+            System.out.println("cookie-agree loadd.");
+            if (loaddElmnt.isDisplayed() && loaddElmnt.isEnabled()) {
+                loaddElmnt.click();
+                System.out.println("cookie-agree clickd.");
+            }
         } catch (TimeoutException | NoSuchElementException e) {
             System.out.println("Кнопка принятия Cookies не найдена или неактивна.");
         }
@@ -36,8 +39,10 @@ public class TestMTS {
     @Severity(SeverityLevel.NORMAL)
     @Test
     public void testTitle() {
-        String title = mtsPage.getTitleText();
-        Assertions.assertEquals("Онлайн пополнение\nбез комиссии", title);
+        Assertions.assertDoesNotThrow(() -> {
+            String title = mtsPage.getTitleText();
+            Assertions.assertEquals("Онлайн пополнение\nбез комиссии", title);
+        });
     }
 
     @Test
@@ -63,33 +68,43 @@ public class TestMTS {
         mtsPage.clickContinueButton();
     }
 
-    @BeforeEach
-    public void frameOpen(){
-        mtsPage.enterPhoneNumber("297777777");
-        mtsPage.enterSum("1");
-        mtsPage.clickContinueButton();
-        mtsFramePage.switchToFrame();
-
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-    }
-
     @Test
     public void testFrameFieldSumUp() {
+      mtsPage.enterPhoneNumber("297777777");
+        mtsPage.enterSum("1");
+        mtsPage.clickContinueButton();
+        try {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("bepaid-iframe")));
+        System.out.println("bepaid-iframe loadd.");
+    } catch (TimeoutException | NoSuchElementException e) {
+        System.out.println("bepaid-iframe not loaded");
+    }
+        mtsFramePage.switchToFrame();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         String title = mtsFramePage.getTextSumUp();
 
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.id("textElementId"), "1.00 BYN"));
-//
-
-
         System.out.println("найдена сумма" + title);
-        Assertions.assertEquals("", title);
+        Assertions.assertEquals("1.00 BYN", title);
 
         mtsFramePage.switchToDefaultContent();
     }
 
     @Test
     public void testFrameFieldNumPhone() {
+        mtsPage.enterPhoneNumber("297777777");
+        mtsPage.enterSum("1");
+        mtsPage.clickContinueButton();
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.className("bepaid-iframe")));
+            System.out.println("bepaid-iframe loadd.");
+        } catch (TimeoutException | NoSuchElementException e) {
+            System.out.println("bepaid-iframe not loaded");
+        }
+        mtsFramePage.switchToFrame();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
         String title = mtsFramePage.getPhoneNumCorrect();
         System.out.println("найден телефон" + title);
         Assertions.assertEquals("Оплата: Услуги связи Номер:375297777777", title);
@@ -102,10 +117,15 @@ public class TestMTS {
         mtsPage.enterPhoneNumber("297777777");
         mtsPage.enterSum("1");
         mtsPage.clickContinueButton();
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.className("bepaid-iframe")));
+            System.out.println("bepaid-iframe loadd.");
+        } catch (TimeoutException | NoSuchElementException e) {
+            System.out.println("bepaid-iframe not loaded");
+        }
         mtsFramePage.switchToFrame();
-
-//        Дежурная проверка во фрейме ли я
-//        Assertions.assertNotNull(mtsPage.getPaymentSystemsBlock(), "Блок платежных систем не найден.");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         String title = mtsFramePage.getTextNumCard();
         System.out.println("num card text" + title);
@@ -119,7 +139,15 @@ public class TestMTS {
         mtsPage.enterPhoneNumber("297777777");
         mtsPage.enterSum("1");
         mtsPage.clickContinueButton();
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.className("bepaid-iframe")));
+            System.out.println("bepaid-iframe loadd.");
+        } catch (TimeoutException | NoSuchElementException e) {
+            System.out.println("bepaid-iframe not loaded");
+        }
         mtsFramePage.switchToFrame();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         String title = mtsFramePage.getTextValidityPeriodCardField();
         System.out.println("Validity Period Text" + title);
@@ -134,7 +162,15 @@ public class TestMTS {
         mtsPage.enterPhoneNumber("297777777");
         mtsPage.enterSum("1");
         mtsPage.clickContinueButton();
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.className("bepaid-iframe")));
+            System.out.println("bepaid-iframe loadd.");
+        } catch (TimeoutException | NoSuchElementException e) {
+            System.out.println("bepaid-iframe not loaded");
+        }
         mtsFramePage.switchToFrame();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         String title = mtsFramePage.getTextCardHolderField();
         System.out.println("Card Holder" + title);
@@ -148,7 +184,15 @@ public class TestMTS {
         mtsPage.enterPhoneNumber("297777777");
         mtsPage.enterSum("1");
         mtsPage.clickContinueButton();
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.className("bepaid-iframe")));
+            System.out.println("bepaid-iframe loadd.");
+        } catch (TimeoutException | NoSuchElementException e) {
+            System.out.println("bepaid-iframe not loaded");
+        }
         mtsFramePage.switchToFrame();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         String title = mtsFramePage.getTextCVCField();
         System.out.println("CVC" + title);
@@ -159,6 +203,18 @@ public class TestMTS {
 
     @Test
     public void testFrameFieldSumDown() {
+        mtsPage.enterPhoneNumber("297777777");
+        mtsPage.enterSum("1");
+        mtsPage.clickContinueButton();
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.className("bepaid-iframe")));
+            System.out.println("bepaid-iframe loadd.");
+        } catch (TimeoutException | NoSuchElementException e) {
+            System.out.println("bepaid-iframe not loaded");
+        }
+        mtsFramePage.switchToFrame();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         mtsFramePage.enterNumCard("1111111111111111");
         mtsFramePage.enterValidityPeriod("03/2222");//ошибся при вводе, но для теста это не принципиально
 
